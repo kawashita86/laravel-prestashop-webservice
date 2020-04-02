@@ -1,11 +1,15 @@
 {
-  "name": "protechstudio/laravel-prestashop-webservice",
+  "name": "kawashita86/laravel-prestashop-webservice",
   "description": "Laravel 5 wrapper for Prestashop Web Service Library",
   "license": "MIT",
   "authors": [
     {
       "name": "Vito Laera",
       "email": "vito.laera@protechstudio.it"
+    },
+    {
+      "name": "Francesco Viglino",
+      "email": "kawashita86@gmail.com"
     }
   ],
   "autoload": {

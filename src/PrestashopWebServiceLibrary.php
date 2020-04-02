@@ -27,6 +27,9 @@ class PrestashopWebServiceLibrary
     /** @var boolean Are we running in a console */
     protected $runningInConsole;
 
+    /** @var boolean Use JSON output format instead of XML */
+    protected $isJson;
+
     /** @var array compatible versions of PrestaShop WebService */
     const PS_COMPATIBLE_VERSION_MIN = '1.4.0.0';
     const PS_COMPATIBLE_VERSION_MAX = '1.7.99.99';
@@ -258,6 +261,10 @@ class PrestashopWebServiceLibrary
     protected function parseXML($response, $suppressExceptions = false)
     {
         if ($response != '') {
+          if($this->isJson) {
+            return json_decode($response);
+          }
+
             libxml_clear_errors();
             libxml_use_internal_errors(true);
             $xml = simplexml_load_string($response, 'SimpleXMLElement', LIBXML_NOCDATA);
@@ -359,6 +366,9 @@ class PrestashopWebServiceLibrary
                 }
             }
             if (count($url_params) > 0) {
+                if($this->isJson) {
+                  $url_params['output_format'] = 'JSON';
+                }
                 $url .= '?'.http_build_query($url_params);
             }
         } else {
@@ -491,4 +501,22 @@ class PrestashopWebServiceLibrary
         $this->checkRequest($request);// check the response validity
         return true;
     }
+
+    /**
+    * @return bool
+    */
+    public function isJson()
+    {
+      return $this->isJson;
+    }
+
+    /**
+    * @param bool $isJson
+    */
+    public function setIsJson($isJson)
+    {
+      $this->isJson = $isJson;
+    }
+
+
 }
